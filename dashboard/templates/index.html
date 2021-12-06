@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+  <title>Orders</title>
+  <link rel="stylesheet" type="text/css" href="/static/slick/slick.css"/>
+  <link rel="stylesheet" type="text/css" href="/static/slick/slick-theme.css"/>
+  <style>
+    .container {
+      margin: 3%;
+      position: relative;
+      color: rgb(10, 10, 10);
+    }
+    .container-cold {
+      margin: 3%;
+      position: relative;
+      color: rgb(0, 68, 255);
+    }
+    .container-hot {
+      margin: 3%;
+      position: relative;
+      color: rgb(255, 0, 0);
+    }
+    
+    .top-left {
+      position: absolute;
+      top: -4px;
+      left: 4px;
+      font: bold 24px/45px Helvetica, Sans-Serif;
+      background: rgb(255, 255, 255); /* fallback color */
+      background: rgba(248, 246, 246, 0.7);
+      padding: 2px; 
+
+    }
+    .top-left-order {
+      position: absolute;
+      top: -4px;
+      left: 4px;
+      font: bold 24px/45px Helvetica, Sans-Serif;
+      background: rgb(255, 255, 255); /* fallback color */
+      background: rgba(255, 254, 254, 0.7);
+      padding: 2px; 
+    }
+    .circle {
+      height: 50px;
+      width: 50px;
+      background-color: rgb(230, 224, 224);
+      border-radius: 50%;
+    }
+    
+    
+  </style>
+  <meta http-equiv="refresh" content="10">
+  </head>
+  <body>
+
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script type="text/javascript" src="/static/slick/slick.min.js"></script>
+
+  <script type="text/javascript">
+
+    $(document).ready(function(){
+      $('.autoplay').slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 200,
+        pauseOnFocus: false,
+        pauseOnHover: false
+      });
+    });
+
+  </script>
+
+
+<div class="container"><img src="/static/img/pret_logo.jpg"jpg" />
+  <div class="top-left">Collect </div></div><div class="slider autoplay">
+  {% for order in my_orders_ready %}
+      <div class="container-{{order.order_temp }}"><img src="/static/img/{{ order.source}}.jpg" /><div class="top-left-order circle">{{order.order_id}}</div></div>
+  {% endfor %}
+  </div>
+  <div class="container"><img src="/static/img/pret_logo.jpg"jpg" />
+    <div class="top-left">Preparing </div></div><div class="slider autoplay">
+    {% for order in my_orders_new %}
+        <div class="container"><img src="/static/img/{{ order.source}}.jpg" /><div class="top-left-order circle">{{order.order_id}} </div></div>
+    {% endfor %}
+    </div>
+  </body>
+</html>
