@@ -18,7 +18,7 @@ The code is written in Python
 2. docker-compose build
 3. docker-compose up
 4. goto http://web.localhost to see the order dashboard
-5. goto http://api.localhost to see the backend api
+5. goto http://api.localhost/docs to see the backend swagger api  
 6. goto http://localhost:8080 to see traefik reverse proxy dashboard
 
 ## Development
