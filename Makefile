@@ -29,6 +29,6 @@ docker-compose-build:
 	docker-compose build
 
 .PHONY: docker-compose-up
-## Build Docker-compose
+## up Docker-compose
 docker-compose-up:
 	docker-compose up

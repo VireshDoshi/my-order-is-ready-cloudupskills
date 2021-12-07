@@ -2,6 +2,9 @@
 
 This is a fully functioning Order Ready dashboard which typically would normally see at a McDonalds or KFC restaurant that displays when your order is ready for collection.
 
+![Dashboard Screenshot](notes/Screenshot_20211207_104546.png)
+
+
 ## Features
 * Dashboard display that shows new orders and orders ready for collection
 * Shop branding

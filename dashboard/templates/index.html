@@ -11,6 +11,12 @@
       position: relative;
       color: rgb(10, 10, 10);
     }
+    .container-float {
+      float: left;
+      margin: 3%;
+      position: relative;
+      color: rgb(10, 10, 10);
+    }
     .container-cold {
       margin: 3%;
       position: relative;
@@ -74,17 +80,19 @@
   </script>
 
 
-<div class="container"><img src="/static/img/pret_logo.jpg"jpg" />
-  <div class="top-left">Collect </div></div><div class="slider autoplay">
+<div class="slider autoplay">
+  <div class="container"><img src="/static/img/pret_logo.jpg" />
+    <div class="top-left">Collect </div></div>
   {% for order in my_orders_ready %}
       <div class="container-{{order.order_temp }}"><img src="/static/img/{{ order.source}}.jpg" /><div class="top-left-order circle">{{order.order_id}}</div></div>
   {% endfor %}
   </div>
-  <div class="container"><img src="/static/img/pret_logo.jpg"jpg" />
-    <div class="top-left">Preparing </div></div><div class="slider autoplay">
+    <div class="slider autoplay">
+      <div class="container-float"><img src="/static/img/pret_logo.jpg" /><div class="top-left">Preparing </div></div>
     {% for order in my_orders_new %}
-        <div class="container"><img src="/static/img/{{ order.source}}.jpg" /><div class="top-left-order circle">{{order.order_id}} </div></div>
+        <div class="container-float"><img src="/static/img/{{ order.source}}.jpg" /><div class="top-left-order circle">{{order.order_id}} </div></div>
     {% endfor %}
     </div>
+  </div>
   </body>
 </html>
