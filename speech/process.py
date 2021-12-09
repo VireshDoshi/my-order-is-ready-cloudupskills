@@ -15,7 +15,7 @@ import json
 pool = Pool(8) # Number of concurrent threads
 
 
-with open("api-key.json") as f:
+with open("speech/api-key.json") as f:
     GOOGLE_CLOUD_SPEECH_CREDENTIALS = f.read()
 
 r = sr.Recognizer()
@@ -80,8 +80,11 @@ def localLiveSpeech():
                 print("Processing...")
             
                 try:
-                    # result_order = r.recognize_sphinx(audio, language='en-US',keyword_entries=[("order", 0.95)])
+                    # result_order = r.recognize_sphinx(audio, language='en-US')
+                    # result_order = r.recognize_sphinx(audio, language='en-US',keyword_entries=[("ready", 0.95)])
+
                     result_order = r.recognize_google_cloud(audio,credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS)
+
 
                     print("you said [{}]".format(result_order))
                     if "ready" in result_order:
@@ -113,19 +116,16 @@ def localLiveSpeech():
                                 if int(part) > 0:
                                     order_id = int(part)
 
-                        url = "http://127.0.0.1:8000/order/"
+                        url = "http://api.localhost/orderready/" + order_id
                         data = {"order_id": order_id}
                         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
                         # only send the order if the number is an integer
                         if int(order_id) > 0:
                             try:
-                                req = requests.post(url, data=json.dumps(data), headers=headers)
+                                req = requests.put(url, data=json.dumps(data), headers=headers)
                                 print("order status code {0}".format(req.status_code))
                             except requests.exceptions.RequestException as error:
 	                            print("Error: Have you started the backend api?", error)
-                            
-                        
-                    
                 except sr.UnknownValueError:
                     print("can not process - try again")
                 except sr.RequestError as e:
@@ -133,8 +133,6 @@ def localLiveSpeech():
                 
     except KeyboardInterrupt:
         pass
-
-
 
 
 def main():

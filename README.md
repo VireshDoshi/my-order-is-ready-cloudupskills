@@ -1,9 +1,9 @@
 # About?
 
-This is a fully functioning Order Ready dashboard which typically would normally see at a McDonalds or KFC restaurant that displays when your order is ready for collection.
+This is a fully functioning Order Ready dashboard with voice recogntion which you typically would see at a McDonalds or KFC restaurant that displays when your order is ready for collection.
 
-![Dashboard Screenshot](notes/Screenshot_20211207_104546.png)
 
+[![Watch the video](https://img.youtube.com/vi/cIWcak9ph7A/0.jpg)](https://youtu.be/cIWcak9ph7A)
 
 ## Features
 * Dashboard display that shows new orders and orders ready for collection
@@ -26,7 +26,12 @@ The code is written in Python
 
 ## Development
 ```bash
-$ virtualenv screen1
-$ source screen1/bin/activate
+$ virtualenv venv-order
+$ source venv-order/bin/activate
 $ pip install -r requirements.txt
+$ cd speech
+$ pip install -r requirements-speech.txt
 ```
+
+
+![Dashboard Screenshot](notes/Screenshot_20211207_104546.png)
