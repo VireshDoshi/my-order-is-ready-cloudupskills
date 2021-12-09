@@ -1,0 +1,21 @@
+certifi==2021.10.8
+cffi==1.15.0
+charset-normalizer==2.0.8
+google-api-python-client==1.6.4
+httplib2==0.10.3
+idna==3.3
+oauth2client==4.1.2
+pocketsphinx @ git+https://github.com/Im-Fran/pocketsphinx-python@3cce4aa2e8d9e7ea988d00a0cbe229f03eb66d8b
+pyasn1==0.4.2
+pyasn1-modules==0.2.1
+PyAudio==0.2.11
+pycparser==2.21
+requests==2.26.0
+rsa==3.4.2
+six==1.11.0
+SpeechRecognition==3.8.1
+tqdm==4.19.5
+uritemplate==3.0.0
+urllib3==1.26.7
+vosk==0.3.32
+word2number==1.1

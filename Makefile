@@ -32,3 +32,10 @@ docker-compose-build:
 ## up Docker-compose
 docker-compose-up:
 	docker-compose up
+
+.PHONY: start-voice-system
+## start voice system
+start-voice-system:
+	python speech/process.py
+
+
