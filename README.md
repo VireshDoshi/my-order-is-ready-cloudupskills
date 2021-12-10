@@ -1,7 +1,15 @@
 # About?
 
-This is a fully functioning Order Ready dashboard with voice recogntion which you typically would see at a McDonalds or KFC restaurant that displays when your order is ready for collection.
+This is a fully functioning Order Ready dashboard with voice recogntion which you typically would see at a McDonalds or KFC restaurant that displays when your order is ready for collection. Using voice recogntion, the order is moved from the preparing state to the Collection state automatically. No Need to tap in any numbers!
 
+## Motivation 1
+I have been buying lots of coffeess from Pret recently as I have a Pret subscription which is great for me as I love my coffee! The frustrating however is that when the shop gets busy then the service levels drop and often my order has gone AWOL!
+
+## Motivation 2
+Mcdonalds already use a order dashboard system for cusotmers and also for delivery partners like Just Eat and Uber. I do however notice that the screen is often broken and then the staff members shout out the order! My system would listen to the ready order and display it immediately onto the dashboard.
+
+## Video Demo
+click on the the image! ( you will be directed to Youtube)
 
 [![Watch the video](https://img.youtube.com/vi/cIWcak9ph7A/0.jpg)](https://youtu.be/cIWcak9ph7A)
 
@@ -13,7 +21,19 @@ This is a fully functioning Order Ready dashboard with voice recogntion which yo
 * Visual indication showing the food temperature
 
 ## Technical
-The code is written in Python 
+The code is written in Python, Flask, Javascript
+
+### Devops
+- Docker and Docker Compose 
+- Makefile
+### api
+- fast-api
+- pydantic
+### dashboard
+- Flask
+### speech recognition
+- google cloud speech ( requires an api key and paid up service using GCP)
+- speech recognition
 
 
 ## Deployment
@@ -35,3 +55,5 @@ $ pip install -r requirements-speech.txt
 
 
 ![Dashboard Screenshot](notes/Screenshot_20211207_104546.png)
+
+![Development View Screenshot](notes/Screenshot_20211209_095751.png)
