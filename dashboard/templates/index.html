@@ -3,12 +3,12 @@
 <html>
   <head>
   <title>Orders</title>
-  <link rel="stylesheet" type="text/css" href="/static/slick/slick.css"/>
-  <link rel="stylesheet" type="text/css" href="/static/slick/slick-theme.css"/>
   <style>
+    body{
+    padding: 5px;
+    }
     .container {
-      margin: 3%;
-      position: relative;
+      position: center;
       color: rgb(10, 10, 10);
     }
     .container-float {
@@ -18,19 +18,21 @@
       color: rgb(10, 10, 10);
     }
     .container-cold {
+     float: left;
       margin: 3%;
       position: relative;
       color: rgb(0, 68, 255);
     }
     .container-hot {
+      float: left;
       margin: 3%;
       position: relative;
       color: rgb(255, 0, 0);
     }
     
-    .top-left {
+    .bottom-middle-status {
       position: absolute;
-      top: -4px;
+      bottom: -4px;
       left: 4px;
       font: bold 24px/45px Helvetica, Sans-Serif;
       background: rgb(255, 255, 255); /* fallback color */
@@ -53,46 +55,85 @@
       background-color: rgb(230, 224, 224);
       border-radius: 50%;
     }
-    
+    .blink {
+      animation: blinker 1s step-start infinite;
+    }
+
+    @keyframes blinker {
+      50% {
+        opacity: 0;
+      }
+    }
+    #footer {
+            position: fixed;
+            padding: 10px 10px 0px 10px;
+            bottom: 0;
+            width: 100%;
+            font: bold 24px/45px Helvetica, Sans-Serif;
+            /* Height of the footer*/ 
+            height: 80px;
+            background-color: rgb(0, 0, 0);
+            color: white;
+        }
     
   </style>
-  <meta http-equiv="refresh" content="10">
-  </head>
+  <link rel="shortcut icon" href="#">
+</head>
   <body>
 
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <script type="text/javascript" src="/static/slick/slick.min.js"></script>
-
   <script type="text/javascript">
 
+    var App = {
+      refreshDataRegularly: function(){
+          setInterval(function(){
+              $.ajax({
+                  url: '/getorders/',
+                  success: function(data){
+
+                    orders = JSON.parse(data)
+                    console.log(orders)
+                    //orders = [{"source": "pret", "order_id": 99, "order_time": "2021-12-10T08:08:26.229432", "order_time_ready": "2021-12-10T08:08:26.229437", "order_temp": "not_set", "order_status": "new"}, {"source": "pret", "order_id": 100, "order_time": "2021-12-10T08:08:26.229439", "order_time_ready": "2021-12-10T08:08:26.229439", "order_temp": "not_set", "order_status": "new"}, {"source": "pret", "order_id": 140, "order_time": "2021-12-10T10:15:09.982124", "order_time_ready": "2021-12-10T10:15:09.982130", "order_temp": "not_set", "order_status": "new"}];
+                    var $output = $('#response-area').empty();
+                    console.log(orders.length)
+                    for(var i = 0; i < orders.length; i++) {
+
+                      var order_id = orders[i].order_id;
+                      var local_order_status = "";
+                      if (orders[i].order_status == "new"){
+                        local_order_status = '<span class="blink_no">preparing</span>'
+                      } else {
+                        local_order_status = '<span class="blink">collect me</span>'
+                      }
+                      var divStr = '<img src="/static/img/' + orders[i].source + '.png" /><div class="top-left-order circle">' + orders[i].order_id + " " + local_order_status + '</div>';
+                      
+                      if (orders[i].order_temp == "cold"){
+                        $output.append($('<div class="container-cold">').html(divStr));
+                        }
+                      else if (orders[i].order_temp == "hot" ) {
+                        $output.append($('<div class="container-hot">').html(divStr));
+                      }
+                      else{
+                        $output.append($('<div class="container-float">').html(divStr));
+                      }
+                    }
+                    $output.empty
+                  }
+              });        
+          }, 10000);
+      }
+    };
+  
     $(document).ready(function(){
-      $('.autoplay').slick({
-        slidesToShow: 5,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 200,
-        pauseOnFocus: false,
-        pauseOnHover: false
-      });
-    });
+        App.refreshDataRegularly();
+    }
+    );
+
 
   </script>
-
-
-<div class="slider autoplay">
-  <div class="container"><img src="/static/img/pret_logo.jpg" />
-    <div class="top-left">Collect </div></div>
-  {% for order in my_orders_ready %}
-      <div class="container-{{order.order_temp }}"><img src="/static/img/{{ order.source}}.jpg" /><div class="top-left-order circle">{{order.order_id}}</div></div>
-  {% endfor %}
-  </div>
-    <div class="slider autoplay">
-      <div class="container-float"><img src="/static/img/pret_logo.jpg" /><div class="top-left">Preparing </div></div>
-    {% for order in my_orders_new %}
-        <div class="container-float"><img src="/static/img/{{ order.source}}.jpg" /><div class="top-left-order circle">{{order.order_id}} </div></div>
-    {% endfor %}
-    </div>
-  </div>
-  </body>
+<img id="shop" src="/static/img/pret_logo.png" />
+<div id="response-area">Please wait...</div>
+<div id="footer">cloudupskills.co.uk - 2021 - Hey, Where is my order?</div>
+</body>
 </html>

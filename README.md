@@ -26,6 +26,7 @@ The code is written in Python, Flask, Javascript
 ### Devops
 - Docker and Docker Compose 
 - Makefile
+- Traefik -reverse proxy
 ### api
 - fast-api
 - pydantic
@@ -53,6 +54,11 @@ $ cd speech
 $ pip install -r requirements-speech.txt
 ```
 
+### Speech
+- https://codelabs.developers.google.com/codelabs/cloud-speech-text-python3#7
+- https://cloud.google.com/speech-to-text/docs/reference/rest
+
+### 
 
 ![Dashboard Screenshot](notes/Screenshot_20211207_104546.png)
 
