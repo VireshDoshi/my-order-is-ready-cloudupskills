@@ -94,7 +94,6 @@
 
                     orders = JSON.parse(data)
                     console.log(orders)
-                    //orders = [{"source": "pret", "order_id": 99, "order_time": "2021-12-10T08:08:26.229432", "order_time_ready": "2021-12-10T08:08:26.229437", "order_temp": "not_set", "order_status": "new"}, {"source": "pret", "order_id": 100, "order_time": "2021-12-10T08:08:26.229439", "order_time_ready": "2021-12-10T08:08:26.229439", "order_temp": "not_set", "order_status": "new"}, {"source": "pret", "order_id": 140, "order_time": "2021-12-10T10:15:09.982124", "order_time_ready": "2021-12-10T10:15:09.982130", "order_temp": "not_set", "order_status": "new"}];
                     var $output = $('#response-area').empty();
                     console.log(orders.length)
                     for(var i = 0; i < orders.length; i++) {
@@ -129,7 +128,6 @@
         App.refreshDataRegularly();
     }
     );
-
 
   </script>
 <img id="shop" src="/static/img/pret_logo.png" />

@@ -25,7 +25,7 @@ help:
 
 .PHONY: docker-compose-build
 ## Build Docker-compose
-docker-compose-build:
+docker-compose-build: flake8
 	docker-compose build
 
 .PHONY: docker-compose-up
@@ -38,4 +38,6 @@ docker-compose-up:
 start-voice-system:
 	python speech/process.py
 
+.PHONY: flake8
+	flake8 .
 

@@ -1,0 +1,7 @@
+[flake8]
+ignore = C901
+exclude =
+    .git,
+    __pycache__,
+    venv-order
+max-complexity = 10
