@@ -43,7 +43,8 @@
     .top-left-order {
       position: absolute;
       top: -4px;
-      left: 4px;
+      left: 12px;
+      padding-left: 12px;
       font: bold 24px/45px Helvetica, Sans-Serif;
       background: rgb(255, 255, 255); /* fallback color */
       background: rgba(255, 254, 254, 0.7);
@@ -84,12 +85,14 @@
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
   <script type="text/javascript">
-
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const shop_name = '{{ shop_name }}';
     var App = {
       refreshDataRegularly: function(){
           setInterval(function(){
               $.ajax({
-                  url: '/getorders/',
+                  url: '/getorders/' + shop_name,
                   success: function(data){
 
                     orders = JSON.parse(data)
@@ -105,7 +108,7 @@
                       } else {
                         local_order_status = '<span class="blink">collect me</span>'
                       }
-                      var divStr = '<img src="/static/img/' + orders[i].source + '.png" /><div class="top-left-order circle">' + orders[i].order_id + " " + local_order_status + '</div>';
+                      var divStr = '<img src="/static/img/' + shop_name + '/' + orders[i].order_type + '.png" /><div class="top-left-order circle">' + orders[i].order_id + " " + local_order_status + '</div>';
                       
                       if (orders[i].order_temp == "cold"){
                         $output.append($('<div class="container-cold">').html(divStr));
@@ -126,11 +129,13 @@
   
     $(document).ready(function(){
         App.refreshDataRegularly();
+        $('.hello-msg').text('Hello from {{ shop_name }}' );
+        $('.shop').attr("src" , "/static/img/{{  shop_name }}/logo.png");
     }
     );
 
   </script>
-<img id="shop" src="/static/img/pret_logo.png" />
+<img class="shop" src="" /><div class="top-left-order hello-msg"><span>Welcome to ... </span></div>
 <div id="response-area">Please wait...</div>
 <div id="footer">cloudupskills.co.uk - 2021 - Hey, Where is my order?</div>
 </body>
