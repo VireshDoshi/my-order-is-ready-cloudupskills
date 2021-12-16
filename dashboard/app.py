@@ -1,19 +1,22 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import requests
 import json
 
 app = Flask(__name__)
-app.config["TEMPLATES_AUTO_RELOAD"] = True
+# app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 
-@app.route("/")
+@app.route("/", methods=['GET'])
 def index():
-    return render_template('index.html')
+    shop_name = request.args.get('shop')
+    if shop_name is None:
+        shop_name = 'pret'
+    return render_template('index.html', shop_name=shop_name)
 
 
-@app.route('/getorders/')
-def getOrders():
-    r = requests.get('http://api:8000/currentordersv2')
+@app.route('/getorders/<shop_name>', methods=['GET'])
+def getOrders(shop_name: str):
+    r = requests.get('http://api:8000/currentordersv2/' + shop_name)
     data = r.json()
     print(data)
     orders_new = []
@@ -27,4 +30,4 @@ def getOrders():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port='5000', debug=True)
+    app.run(host='0.0.0.0', port='5001', debug=True)
