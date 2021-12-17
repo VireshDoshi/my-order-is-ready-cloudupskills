@@ -105,6 +105,8 @@
                       var local_order_status = "";
                       if (orders[i].order_status == "new"){
                         local_order_status = '<span class="blink_no">preparing</span>'
+                      } else if (orders[i].order_status == "problem"){
+                        local_order_status = '<span class="blink">contact team</span>' 
                       } else {
                         local_order_status = '<span class="blink">collect me</span>'
                       }
