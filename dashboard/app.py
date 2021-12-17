@@ -18,14 +18,14 @@ def index():
 def getOrders(shop_name: str):
     r = requests.get('http://api:8000/currentordersv2/' + shop_name)
     data = r.json()
-    print(data)
-    orders_new = []
-    orders_ready = []
-    for order in data:
-        if order['order_status'] == 'new':
-            orders_new.append(order)
-        if order['order_status'] == 'ready':
-            orders_ready.append(order)
+    # print(data)
+    # orders_new = []
+    # orders_ready = []
+    # for order in data:
+    #     if order['order_status'] == 'new':
+    #         orders_new.append(order)
+    #     if order['order_status'] == 'ready':
+    #         orders_ready.append(order)
     return json.dumps(data)
 
 
