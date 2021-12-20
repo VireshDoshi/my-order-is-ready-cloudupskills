@@ -1,0 +1,14 @@
+---
+version: '3.8'
+services: 
+  ansible-playbook:
+    image: vireshdoshi/azuretools:5.0.0
+    env_file: .env
+    entrypoint: ansible-playbook
+    command: ansible-playbook 
+    working_dir: /opt/workspace
+    volumes:
+      - ./:/opt/workspace
+      - ./configure:/opt/build/configure
+      - ./passwd:/etc/passwd:rw
+      - /tmp:/tmp

@@ -23,15 +23,20 @@ help:
 	} \
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 
-.PHONY: docker-compose-build
+.PHONY: dc-build
 ## Build Docker-compose
-docker-compose-build: flake8
+dc-build: flake8
 	docker-compose build
 
-.PHONY: docker-compose-up
+.PHONY: dc-up
 ## up Docker-compose
-docker-compose-up:
+dc-up:
 	docker-compose up
+
+.PHONY: dc-down
+## down Docker-compose
+dc-down:
+	docker-compose down
 
 .PHONY: start-voice-system
 ## start voice system
@@ -39,5 +44,13 @@ start-voice-system:
 	python speech/process.py
 
 .PHONY: flake8
+## flake8
+flake8:
 	flake8 .
+
+.PHONY: clean
+## clean
+clean:
+	find . -type d -name  "__pycache__" -exec rm -r {} +
+
 
