@@ -10,33 +10,108 @@ services:
   #     - .:/app
   #   networks:
   #     - "order-net"
-  api:
+  api-kk:
     build:
       context: .
       dockerfile: api/Dockerfile
-    command: bash -c 'uvicorn api.main:app --host 0.0.0.0 --proxy-headers --port 8000'
+    command: bash -c 'python -m uvicorn api.main:app --host 0.0.0.0 --proxy-headers --port 8001' 
     volumes:
       - .:/app
     ports:
-      - 8000
+      - 8001
+    environment:
+      SHOP_NAME: "kk"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=Host(`api.localhost`)"
+      - "traefik.http.routers.api-kk.rule=Host(`kk.api.localhost`)"
       # - "traefik.http.routers.api.entrypoints=web"
     networks:
       - "order-net"
-  web:
+  web-kk:
     build:
       context: .
       dockerfile: dashboard/Dockerfile
-    command: python dashboard/app.py
+    command: python -m flask run -h 0.0.0.0 -p 5001
     volumes:
       - .:/app
     ports:
-      - 5000
+      - 5001
+    environment:
+      API_PORT: 8001
+      SHOP_NAME: "kk"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.web.rule=Host(`web.localhost`)"
+      - "traefik.http.routers.web-kk.rule=Host(`kk.web.localhost`)"
+      # - "traefik.http.routers.dashboard.entrypoints=web"
+    networks:
+      - "order-net"
+  api-pret:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    command: bash -c 'python -m uvicorn api.main:app --host 0.0.0.0 --proxy-headers --port 8002' 
+    volumes:
+      - .:/app
+    ports:
+      - 8002
+    environment:
+      SHOP_NAME: "pret"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-pret.rule=Host(`pret.api.localhost`)"
+      # - "traefik.http.routers.api.entrypoints=web"
+    networks:
+      - "order-net"
+  web-pret:
+    build:
+      context: .
+      dockerfile: dashboard/Dockerfile
+    command: python -m flask run -h 0.0.0.0 -p 5002
+    volumes:
+      - .:/app
+    ports:
+      - 5002
+    environment:
+      API_PORT: 8002
+      SHOP_NAME: "pret"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web-pret.rule=Host(`pret.web.localhost`)"
+      # - "traefik.http.routers.dashboard.entrypoints=web"
+    networks:
+      - "order-net"
+  api-starbucks:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    command: bash -c 'python -m uvicorn api.main:app --host 0.0.0.0 --proxy-headers --port 8003' 
+    volumes:
+      - .:/app
+    ports:
+      - 8003
+    environment:
+      SHOP_NAME: "starbucks"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-starbucks.rule=Host(`starbucks.api.localhost`)"
+      # - "traefik.http.routers.api.entrypoints=web"
+    networks:
+      - "order-net"
+  web-starbucks:
+    build:
+      context: .
+      dockerfile: dashboard/Dockerfile
+    command: python -m flask run -h 0.0.0.0 -p 5003
+    volumes:
+      - .:/app
+    ports:
+      - 5003
+    environment:
+      API_PORT: 8003
+      SHOP_NAME: "starbucks"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web-starbucks.rule=Host(`starbucks.web.localhost`)"
       # - "traefik.http.routers.dashboard.entrypoints=web"
     networks:
       - "order-net"
@@ -48,6 +123,7 @@ services:
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock:ro
         - "./traefik.dev.toml:/etc/traefik/traefik.toml"
+        # - ".:/tmp/logs"
       networks:
         - "order-net"
 
