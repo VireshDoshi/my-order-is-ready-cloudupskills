@@ -6,21 +6,25 @@ import os
 app = Flask(__name__)
 API_PORT = os.environ['API_PORT']
 SHOP_NAME = os.environ['SHOP_NAME']
+BRAND_NAME = os.environ['BRAND_NAME']
 
 
 @app.route("/", methods=['GET'])
 def index():
     shop_name = SHOP_NAME
+    brand_name = BRAND_NAME
     # shop_name = request.args.get('shop')
     # if shop_name is None:
     #     shop_name = 'pret'
-    return render_template('index.html', shop_name=shop_name)
+    return render_template('index.html', shop_name=shop_name,
+                           brand_name=brand_name)
 
 
 @app.route('/getorders/<shop_name>', methods=['GET'])
 def getOrders(shop_name: str):
-    shopapi = "http://api-{}:{}/currentordersv2/{}".format(
-              shop_name, API_PORT, shop_name)
+    brand_name = BRAND_NAME
+    shopapi = "http://api-{1}-{0}:{2}/currentordersv2/{0}".format(
+              shop_name, brand_name, API_PORT)
     r = requests.get(shopapi)
     data = r.json()
     # print(data)
