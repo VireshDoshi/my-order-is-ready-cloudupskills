@@ -93,7 +93,7 @@
       refreshDataRegularly: function(){
           setInterval(function(){
               $.ajax({
-                  url: '/getorders/' + shop_name,
+                  url: '/getorders',
                   success: function(data){
 
                     orders = JSON.parse(data)

@@ -9,15 +9,19 @@ from orders.order import (remove_old_orders,
                           set_order_state_to_problem, set_food_temp)
 from common.enum import OrderTempEnum, OrderStatusEnum, Order
 import structlog
+import os
 
 config_structlog
 log = structlog.get_logger()
 
 app = FastAPI()
+SHOP_NAME = os.environ['SHOP_NAME']
+BRAND_NAME = os.environ['BRAND_NAME']
 
 
-@app.post('/order/{shop_name}', response_model=Order)
-async def create_order(*, shop_name: str, order: Order) -> dict:
+@app.post('/order', response_model=Order)
+async def create_order(*, order: Order) -> dict:
+    shop_name = SHOP_NAME
     # get the orders from that shop
     shop_orders = shopsDict[shop_name]
     new_order = Order(
@@ -42,8 +46,9 @@ async def create_order(*, shop_name: str, order: Order) -> dict:
     return order
 
 
-@app.get('/currentordersv2/{shop_name}', response_model=List[Order])
-async def get_all_current_orders_v2(shop_name: str):
+@app.get('/currentordersv2', response_model=List[Order])
+async def get_all_current_orders_v2():
+    shop_name = SHOP_NAME
     try:
         # Get the exising shop orders
         shop_orders = shopsDict[shop_name]
@@ -58,8 +63,9 @@ async def get_all_current_orders_v2(shop_name: str):
     return shop_orders[-SHOWLAST_ORDERS_INT:]
 
 
-@app.put('/orderready/{shop_name}/{order_id}')
-async def order_ready(shop_name: str, order_id: int) -> dict:
+@app.put('/orderready/{order_id}')
+async def order_ready(order_id: int) -> dict:
+    shop_name = SHOP_NAME
     for order in shopsDict[shop_name]:
         if order['order_id'] == order_id:
             order['order_time_ready'] = datetime.now()
