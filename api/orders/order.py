@@ -2,6 +2,7 @@ from common.enum import OrderTempEnum, OrderStatusEnum, Order
 import structlog
 from common.structlog import config_structlog
 from datetime import datetime
+import os
 
 
 config_structlog
@@ -12,9 +13,10 @@ ORDER_READY_TIME_MAX_SECS = 60
 PROBLEM_ORDERS_SECS = 180
 # just remove orders if they are in problem state after set time
 PROBLEM_ORDERS_MAX_SECS = 300
+SHOP_NAME = os.environ['SHOP_NAME']
 
 # Main in memory database
-shopsDict = {'windsor': [], 'heathrow': []}
+shopsDict = {'windsor': [], 'heathrow': [], SHOP_NAME: []}
 
 
 def remove_old_orders(shop_name: str) -> int:

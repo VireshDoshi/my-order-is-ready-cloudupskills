@@ -20,10 +20,11 @@ def index():
                            brand_name=brand_name)
 
 
-@app.route('/getorders/<shop_name>', methods=['GET'])
-def getOrders(shop_name: str):
+@app.route('/getorders/', methods=['GET'])
+def getOrders():
+    shop_name = SHOP_NAME
     brand_name = BRAND_NAME
-    shopapi = "http://api-{1}-{0}:{2}/currentordersv2/{0}".format(
+    shopapi = "http://api-{1}-{0}:{2}/currentordersv2".format(
               shop_name, brand_name, API_PORT)
     r = requests.get(shopapi)
     data = r.json()
